@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Authentication",
+    "\\Controllers",
+    "\\Model",
+    "\\RabbitMQ",
+    "\\RabbitMQ\\Consumer"
+  ],
+  "SelectedNode": "\\RabbitMQ\\Consumer\\UserConsumer.cs",
+  "PreviewInSolutionExplorer": false
+}

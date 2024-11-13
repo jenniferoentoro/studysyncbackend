@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Authentication",
+    "\\Controllers",
+    "\\Data",
+    "\\Data\\ModelBuilders",
+    "\\Migrations",
+    "\\Model",
+    "\\RabbitMQ",
+    "\\Service"
+  ],
+  "SelectedNode": "\\Model\\Category.cs",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,0 +1,11 @@
+groups:
+  - name: rules
+    rules:
+      - alert: HighErrorRate
+        expr: job:errors:rate5m > 0.5
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: High error rate detected
+          description: "{{ $labels.instance }} has a high error rate."

@@ -1,0 +1,58 @@
+stages:
+  - build
+  - test
+  - sonarqube-check
+  - docker-compose
+
+build_user:
+  stage: build
+  script:
+    - cd user_service
+    - dotnet build
+
+build_source:
+  stage: build
+  script:
+    - cd source_service
+    - dotnet build
+
+build_frontend:
+  stage: build
+  script:
+    - cd frontend
+    - npm install
+    - npm run build
+
+backend_user_test:
+  stage: test
+  script:
+    - cd UserTest
+    - dotnet test
+
+frontend_test:
+  stage: test
+  script:
+    - cd frontend
+    - npm install
+    - npm run cypress:run -- --headless --browser chrome
+
+sonarqube-check:
+  stage: sonarqube-check
+  script:
+    - cd user_service
+    - SonarScanner.MSBuild.exe begin /k:"StudySync" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="sqp_7b688673962df7c9cd32059494262fa12c98ce35" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+    - dotnet build
+    - dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
+    - dotnet-sonarscanner end /d:sonar.login="sqp_7b688673962df7c9cd32059494262fa12c98ce35"
+    - dotnet build-server shutdown
+  allow_failure: true
+  only:
+    - main
+
+docker-compose:
+  stage: docker-compose
+  image: docker/compose:latest
+  services:
+    - docker:dind
+  script:
+    - docker-compose up -d

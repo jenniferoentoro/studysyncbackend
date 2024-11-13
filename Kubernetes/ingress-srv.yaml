@@ -1,0 +1,109 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: study-sync-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /allAws
+            pathType: Prefix
+            backend:
+              service:
+                name: user-service
+                port:
+                  number: 8080
+
+          # - path: /api/publish/admin
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: publish-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/publish/reader
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: publish-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/publish/update
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: publish-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/publish/:id
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: publish-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/publish/pdf
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: publish-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/publish/delete/:id
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: publish-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/paper/all                           #CATALOG SERVICE ROUTE
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: catalog-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/paper/admin
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: catalog-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/paper/reader
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: catalog-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/paper/public
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: catalog-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/paper/[0-9a-fA-F]{24}$
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: catalog-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/paper/author/:id
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: catalog-service-clusterip-srv
+          #       port:
+          #         number: 80
+          # - path: /api/paper/catalog/Storage/pdf
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: catalog-service-clusterip-srv
+          #       port:
+          #         number: 80

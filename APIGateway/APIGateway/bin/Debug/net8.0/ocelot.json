@@ -1,0 +1,65 @@
+{
+    "Routes":[
+      {
+        "DownstreamPathTemplate": "/api/user/login",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "user-service",
+            "Port": 8080
+          }
+        ],
+        "UpstreamPathTemplate": "/api/login",
+        "UpstreamHttpMethod": ["Post"]
+      },
+        {
+            "DownstreamPathTemplate": "/api/user/user",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+              {
+                "Host": "user-service",
+                "Port": 8080
+              }
+            ],
+            "UpstreamPathTemplate": "/signin/user",
+            "UpstreamHttpMethod": [ "Post" ]
+          },
+          {
+            "DownstreamPathTemplate": "/allAws",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+              {
+                "Host": "user-service",
+                "Port": 8080
+              }
+            ],
+            "UpstreamPathTemplate": "/api/users",
+            "UpstreamHttpMethod": [ "Get" ]
+          },
+
+          {
+            "DownstreamPathTemplate": "/api/category",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+              {
+                "Host": "source-service",
+                "Port": 8080
+              }
+            ],
+            "UpstreamPathTemplate": "/category",
+            "UpstreamHttpMethod": [ "Post", "Get" ]
+          },
+          {
+            "DownstreamPathTemplate": "/api/source",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+              {
+                "Host": "source-service",
+                "Port": 8080
+              }
+            ],
+            "UpstreamPathTemplate": "/source",
+            "UpstreamHttpMethod": [ "Post", "Get" ]
+          }
+    ]
+}

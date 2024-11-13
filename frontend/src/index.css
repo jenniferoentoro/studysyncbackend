@@ -1,0 +1,45 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.cover-background {
+  background-image: url('/images/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+@font-face {
+  font-family: "MigraLight";
+  src: local("Migra-ExtraLight"), url("./font/Migra-ExtraLight.ttf") format("truetype");
+}
+
+.migralight{
+  font-family: "MigraLight";
+}
+.frame-background {
+  background-image: url('/images/frame.png');
+  background-size: cover;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 400px;
+  padding: 40px; /* Adjust as needed */
+  box-sizing: border-box;
+}
+
+
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.color-gradient{
+  background: rgb(115,134,198);
+  background: linear-gradient(90deg, rgba(115,134,198,1) 15%, rgba(249,154,175,1) 64%);
+}

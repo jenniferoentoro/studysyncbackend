@@ -1,0 +1,105 @@
+image: mcr.microsoft.com/dotnet/core/sdk:3.1
+
+variables:
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  GIT_DEPTH: "0"
+
+stages:
+  # - build
+  # - test
+  - sonarcloud-check
+  - docker-compose
+
+# build_user:
+#   stage: build
+#   script:
+#     - cd user_service
+#     - dotnet build
+#   artifacts:
+#     paths:
+#       - user_service/bin
+#       - user_service/obj
+
+# build_source:
+#   stage: build
+#   script:
+#     - cd source_service
+#     - dotnet build
+#   artifacts:
+#     paths:
+#       - source_service/bin
+#       - source_service/obj
+
+# backend_user_test:
+#   stage: test
+#   script:
+#     - cd UserTest
+#     - dotnet test
+#   artifacts:
+#     when: always
+#     paths:
+#       - UserTest/TestResults
+#       - UserTest/coverage.cobertura.xml
+
+# get-sonar-binaries:
+#   stage: .pre
+#   cache:
+#     policy: push
+#     key: "${CI_COMMIT_SHORT_SHA}"
+#     paths:
+#       - build-wrapper/
+#       - sonar-scanner/
+#   script:
+#     # Download sonar-scanner
+#     - Invoke-WebRequest -Uri 'https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-windows.zip' -OutFile sonar-scanner.zip
+#     - Expand-Archive -Path sonar-scanner.zip -DestinationPath . -Force
+#     - Rename-Item -Path 'sonar-scanner-5.0.1.3006-windows' -NewName 'sonar-scanner'
+#     # Download build-wrapper (if needed)
+#     - Invoke-WebRequest -Uri "$($env:SONAR_HOST_URL)/static/cpp/build-wrapper-win-x86.zip" -OutFile build-wrapper-win-x86.zip
+
+#     - Expand-Archive -Path build-wrapper-win-x86.zip -DestinationPath ./build-wrapper -Force
+#   only:
+#     # - merge_requests
+#     # - master
+#     # - develop
+#     - dockerfixing
+
+# sonarcloud-check:
+#   stage: sonarcloud-check
+#   cache:
+#     policy: pull
+#     key: "${CI_COMMIT_SHORT_SHA}"
+#     paths:
+#       - build-wrapper/
+#       - sonar-scanner/
+#   script:
+#     - .\sonar-scanner\bin\sonar-scanner.bat -Dsonar.host.url="$($env:SONAR_HOST_URL)" -Dsonar.token="$($env:SONAR_TOKEN)" -Dsonar.cfamily.compile-commands=bw-output\compile_commands.json
+#   only:
+#     # - merge_requests
+#     # - master
+#     # - develop
+#     - dockerfixing
+
+sonarcloud-check:
+  stage: sonarcloud-check
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  only:
+    - dockerfixing
+    - master
+    - develop
+
+docker-compose:
+  stage: docker-compose
+  image: docker/compose:latest
+  services:
+    - docker:dind
+  script:
+    - docker-compose up -d

@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\source_service",
+    "\\source_service\\Model",
+    "\\UserTest",
+    "\\UserTest\\UserTest"
+  ],
+  "SelectedNode": "\\source_service\\Model\\RabbitMQSettings.cs",
+  "PreviewInSolutionExplorer": false
+}

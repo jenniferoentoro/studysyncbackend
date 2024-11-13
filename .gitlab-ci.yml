@@ -1,0 +1,121 @@
+image: mcr.microsoft.com/dotnet/core/sdk:3.1
+
+variables:
+  SONAR_USER_HOME: "user_service/.sonar"
+  GIT_DEPTH: "0"
+  SNYK_TOKEN: "0e0d7cd9-8a53-4131-80b7-c783a995a1a2"
+
+stages:
+  - build
+  - test
+  - sonarcloud-check
+  - snyk-security-scan
+  - docker-compose
+  - docker-hub
+  - deploy
+
+build_user:
+  stage: build
+  script:
+    - cd user_service
+    - dotnet build
+  artifacts:
+    paths:
+      - user_service/bin
+      - user_service/obj
+
+build_source:
+  stage: build
+  script:
+    - cd source_service
+    - dotnet build
+  artifacts:
+    paths:
+      - source_service/bin
+      - source_service/obj
+
+backend_user_test:
+  stage: test
+  script:
+    - cd UserTest
+    - dotnet test
+  artifacts:
+    when: always
+    paths:
+      - UserTest/TestResults
+      - UserTest/coverage.cobertura.xml
+
+backend_source_test:
+  stage: test
+  script:
+    - cd SourceTest
+    - dotnet test
+  artifacts:
+    when: always
+    paths:
+      - SourceTest/TestResults
+      - SourceTest/coverage.cobertura.xml
+
+sonarcloud-check:
+  stage: sonarcloud-check
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - cd user_service
+    - sonar-scanner
+    - cd ../source_service
+    - sonar-scanner
+  only:
+    - develop
+    - main
+
+docker-compose:
+  stage: docker-compose
+  image: docker/compose:latest
+  services:
+    - docker:dind
+  script:
+    - docker-compose build --no-cache
+    - docker compose up -d
+deploy_to_docker_hub:
+  stage: docker-hub
+  image: docker:latest
+  script:
+    - docker login -u "$DOCKER_USERNAME" --password "$DOCKER_TOKEN"
+    - docker build -t "$DOCKER_USERNAME/study-sync-web-application-user-service:latest" ./user_service
+    - docker build -t "$DOCKER_USERNAME/study-sync-web-application-source_service:latest" ./source_service
+    - docker build -t "$DOCKER_USERNAME/study-sync-web-application-apigateway:latest" ./APIGateway
+    - docker push "$DOCKER_USERNAME/study-sync-web-application-user-service:latest"
+    - docker push "$DOCKER_USERNAME/study-sync-web-application-source_service:latest"
+    - docker push "$DOCKER_USERNAME/study-sync-web-application-apigateway:latest"
+  only:
+    - main
+
+before_script:
+  - npm install -g snyk
+  - $env:PATH += ";$env:APPDATA\npm"
+security-scan:
+  stage: snyk-security-scan
+  script:
+    - cd user_service
+    - snyk auth $SNYK_TOKEN
+    - snyk monitor --org=06e951a2-fa41-4586-bafa-4850f719a326
+    - cd ../source_service
+    - snyk monitor --org=06e951a2-fa41-4586-bafa-4850f719a326
+  only:
+    - main
+deploy:
+  stage: deploy
+  script:
+    - az login --service-principal -u "" -p "NAl8Q~" --tenant ""
+    - echo "hai"''
+    - az aks get-credentials --resource-group "group" --name "name" --overwrite-existing
+    - cd Kubernetes
+    - kubectl apply -f .
+  only:
+    - main

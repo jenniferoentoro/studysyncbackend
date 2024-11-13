@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>user_service</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>658c28f0-02a8-473b-bcec-8f6c70ce9dc4</ProjectGuid>
+  <FullPath>d:\Kuliah\Fontys\Semester6\Project\study-sync-web-application\user_service\user_service.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="d:\Kuliah\Fontys\Semester6\Project\study-sync-web-application\.sonarqube\conf\41\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePaths">d:\Kuliah\Fontys\Semester6\Project\study-sync-web-application\.sonarqube\out\41\Issues.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPaths">d:\Kuliah\Fontys\Semester6\Project\study-sync-web-application\.sonarqube\out\41</Property>
+  </AnalysisSettings>
+  <Configuration>Debug</Configuration>
+  <Platform>AnyCPU</Platform>
+  <TargetFramework>net8.0</TargetFramework>
+</ProjectInfo>

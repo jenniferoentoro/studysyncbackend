@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SonarProjectConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/analyzer/2021/1">
+  <AnalysisConfigPath>d:\Kuliah\Fontys\Semester6\Project\study-sync-web-application\.sonarqube\conf\SonarQubeAnalysisConfig.xml</AnalysisConfigPath>
+  <ProjectPath>d:\Kuliah\Fontys\Semester6\Project\study-sync-web-application\UserTest\UserTest\UserTest.csproj</ProjectPath>
+  <FilesToAnalyzePath>d:\Kuliah\Fontys\Semester6\Project\study-sync-web-application\.sonarqube\conf\34\FilesToAnalyze.txt</FilesToAnalyzePath>
+  <OutPath>d:\Kuliah\Fontys\Semester6\Project\study-sync-web-application\.sonarqube\out\34</OutPath>
+  <ProjectType>Test</ProjectType>
+  <TargetFramework>net8.0</TargetFramework>
+</SonarProjectConfig>
